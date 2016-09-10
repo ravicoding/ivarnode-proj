@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html ng-app="ReApp">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Receipe Admin</title>
+  <link data-require="twitter-bootstrap@3.2.0" data-semver="3.2.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+
+
+  <link rel="stylesheet" href="style.css" />
+  <script data-require="angular.js@1.5.x" src="https://code.angularjs.org/1.5.8/angular.js" data-semver="1.5.8"></script>
+  <script data-require="firebase@2.3.2" data-semver="2.3.2" src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+  <script data-require="jquery@*" data-semver="3.0.0" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="app.js"></script>
+</head>
+
+<body ng-controller="ReCtrl">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#add" data-toggle="tab">Add</a>
+    </li>
+    <li><a href="#list" data-toggle="tab">List</a>
+    </li>
+  </ul>
+  <div class="tab-content clearfix">
+    <div class="tab-pane active" id="add">
+      <div class="container">
+        <form>
+          <div class="form-group">
+            <label for="tit"> Title</label>
+            <input class="form-control" type="text" id="tit" ng-model="obj.tit" />
+          </div>
+          <div class="form-group">
+            <label> Tags</label>
+            <input class="form-control" type="text" ng-model="obj.tg" />
+          </div>
+          <div class="form-group">
+            <label> Brief description</label>
+            <input class="form-control" type="text" ng-model="obj.des" />
+          </div>
+          <div class="form-group">
+            <label> TB Image URL</label>
+            <input class="form-control" type="text" ng-model="obj.tbimage" />
+          </div>
+          <div class="form-group">
+            <label> URL</label>
+            <input class="form-control" type="text" ng-model="obj.url" />
+          </div>
+          <div class="form-group">
+            <label> type</label>
+            <input class="form-control" type="text" ng-model="obj.type" />
+          </div>
+
+          <div class="form-group">
+            <button type="button" class="btn btn-primary" ng-click="submit($event)">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="tab-pane" id="list">
+
+      <button type="button" class="btn" ng-click="fetch($event)">Fetch</button>
+
+      <div class="container">
+        <table>
+          <tr ng-repeat="obj in objs">
+            <td>
+              <div class="ritem">
+                <div class="name">
+                  {{obj.name}}
+                </div>
+                <div class="body">
+                <div class="tbimage">
+                  <img src="{{obj.tburl}}" />
+                </div>
+                <div>
+                  {{obj.des}}
+                </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <button type="button" class="btn" ng-click="remove($event,obj._id)">Remove</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

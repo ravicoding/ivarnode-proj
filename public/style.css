@@ -1,0 +1,12 @@
+.ritem {
+    background-color: #eee;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+  
+}
+
+.ritem .name {
+	color: rebeccapurple;
+    font-size: 1.2em;
+}
