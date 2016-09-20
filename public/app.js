@@ -1,9 +1,18 @@
 var app = angular.module('ReApp', []);
 
-app.controller('ReCtrl', function($scope,$http) {
+app.controller('ReCtrl', function($scope,$http,$location) {
   $scope.objs = [];
 // var fbRef = new Firebase("https://recepies-87d65.firebaseio.com/");
-var url = "http://localhost:7000/receipes"
+//var url = "http://nodeserver-143022.appspot.com/receipes"
+  var url = "http://localhost:7000/receipes";
+  var init = function(){
+      console.log($location.host());
+      if($location.host().indexOf('localhost') == -1) {
+         url = "http://nodeserver-143022.appspot.com/receipes";
+      }
+   };
+
+ init();
  $scope.submit = function() {
    //fbRef.push($scope.obj);
 
@@ -19,10 +28,14 @@ var url = "http://localhost:7000/receipes"
  }
 
  $scope.fetch = function() {
+   console.log('At fetch');
 
  	$http.get(url).success(function(data){
  		$scope.objs = data;
- 	});
+ 	})
+   .error(function(status){
+      console.log(status);
+   });
  }
 
  $scope.remove = function($event,id) {

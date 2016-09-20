@@ -3,7 +3,11 @@ var http = require('http');
 var express = require('express'),
        path = require('path');
     
-var Receipe = require('./receipes.js');
+//var Receipe = require('./receipes.js');
+
+var Receipe = require('./rec-nedb.js');
+
+var report = require('./error-report.js');
 
 var appServer = express();
 var bodyParser = require('body-parser');
@@ -20,7 +24,8 @@ appServer.get('/receipes', function (req, res) {
   	     console.log(receipes);
   		res.render('/receipes',receipes);
   }); */
-  Receipe.find(function(err,receipes){
+  console.log('At get method');
+  Receipe.find({},function(err,receipes){
   	console.log(err);
     console.log(receipes);
     res.send(receipes); 
@@ -41,17 +46,21 @@ appServer.delete('/receipes/:id',function(req,res){
 appServer.post('/receipes',function(req,res){
 	console.log('body: ' + JSON.stringify(req.body));
 	var obj = req.body;
-	var receipe = new Receipe();
-	receipe.name = obj.tit;
-	receipe.des = obj.des;
-	receipe.tags = obj.tg;
-	receipe.url = obj.url;
-	receipe.tburl = obj.tbimage;
-	receipe.type = obj.type;
-	receipe.created_at = new Date();
+	//var receipe = new Receipe();
+	var robj = {};
+	robj.name = obj.tit;
+	robj.des = obj.des;
+	robj.tags = obj.tg;
+	robj.url = obj.url;
+	robj.tburl = obj.tbimage;
+	robj.type = obj.type;
+	robj.created_at = new Date();
 
-	receipe.save(function(err,obj) {
-  		if (err) return console.error(err);
+	Receipe.insert(robj,function(err,obj) {
+  		if (err) {
+  			report(err,req);
+  			console.error(err);
+  		}
   		console.log(obj);
 	});
 	res.status(200).send('OK')

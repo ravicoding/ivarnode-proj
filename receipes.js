@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');   
 
-mongoose.connect('mongodb://localhost/ivardb');
+mongoose.connect('mongodb://104.196.134.223/ivardb');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
